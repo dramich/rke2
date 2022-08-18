@@ -55,6 +55,10 @@ fi
 #     rather than the downloading the files from the internet.
 #     Default is not set.
 #
+#   - INSTALL_RKE2_SKIP_RELOAD
+#     If set, the install script will skip reloading systemctl daemon after the tar has been extracted and systemd units
+#     have been moved.
+#     Default is not set.
 
 
 # info logs the given argument at info log level.
@@ -561,6 +565,9 @@ do_install_tar() {
     install_airgap_tarball
     verify_tarball
     unpack_tarball
+
+    [ "${INSTALL_RKE2_SKIP_RELOAD}" = true ] && return
+
     systemctl daemon-reload
 }
 
